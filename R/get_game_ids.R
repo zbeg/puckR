@@ -65,7 +65,11 @@ get_game_ids <- function(season = NULL, day = as.Date(Sys.Date(), "%Y-%m-%d")){
 
     game_id_list <- NULL
     for(i in unique(team_info$team_abbr)){
-      url <- glue::glue("https://api-web.nhle.com/v1/club-schedule-season/{i}/{season-1}{season}")
+      #url <- glue::glue("https://api-web.nhle.com/v1/club-schedule-season/{i}/{season-1}{season}")
+      # Correctly format the season years with a hyphen
+      url <- glue::glue("https://api-web.nhle.com/v1/club-schedule-season/{i}/{season-1}-{season}")
+      
+      
 
       site <- tryCatch(
         jsonlite::read_json(url),

@@ -19,7 +19,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Daniel Morse \email{danmorse8642@gmail.com}
+\strong{Maintainer}: Daniel Morse \email{zaiemb@gmail.com}
 
 }
 \keyword{internal}
