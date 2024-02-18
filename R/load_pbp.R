@@ -48,17 +48,17 @@ load_pbp <- function(season = as.numeric(substr(Sys.Date() + 184,1,4)), shift_ev
     pbp_all <- NULL
     for(i in to_pull){
       # first check if season data exists (for upcoming seasons)
-      season_url <- glue::glue("https://github.com/danmorse314/puckR-data/blob/main/data/play_by_play_{i}.rds")
+      season_url <- glue::glue("https://github.com/zbeg/puckR-data/blob/main/data/play_by_play_{i}.rds")
       if(httr::http_status(httr::GET(season_url))$category == "Client error"){
         message(glue::glue("{i} season not available"))
         pbp <- NULL
       } else {
         if(shift_events == FALSE){
-          pbp <- readRDS(url(glue::glue("https://github.com/danmorse314/puckR-data/raw/main/data/play_by_play_{i}_lite.rds")))
+          pbp <- readRDS(url(glue::glue("https://github.com/zbeg/puckR-data/raw/main/data/play_by_play_{i}_lite.rds")))
           pbp_all <- dplyr::bind_rows(pbp_all, pbp)
           rm(pbp,i)
         } else {
-          pbp <- readRDS(url(glue::glue("https://github.com/danmorse314/puckR-data/raw/main/data/play_by_play_{i}.rds")))
+          pbp <- readRDS(url(glue::glue("https://github.com/zbeg/puckR-data/raw/main/data/play_by_play_{i}.rds")))
           pbp_all <- dplyr::bind_rows(pbp_all, pbp)
           rm(pbp,i)
         }

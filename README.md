@@ -1,16 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# hockeyR <img src="man/figures/logo.png" style="float:right" width="25%" min-width="120px"/>
+# puckR <img src="man/figures/logo.png" style="float:right" width="25%" min-width="120px"/>
 
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/hockeyR)](https://CRAN.R-project.org/package=hockeyR)
-[![](https://img.shields.io/badge/devel%20version-1.2.0-blue.svg)](https://github.com/hockeyR)
-[![R-CMD-check](https://github.com/danmorse314/hockeyR/workflows/R-CMD-check/badge.svg)](https://github.com/danmorse314/hockeyR/actions)
-[![](https://img.shields.io/github/last-commit/danmorse314/hockeyR.svg)](https://github.com/danmorse314/hockeyR/commits/master)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/hockeyR)](https://cran.r-project.org/package=hockeyR)
+status](https://www.r-pkg.org/badges/version/puckR)](https://CRAN.R-project.org/package=puckR)
+[![](https://img.shields.io/badge/devel%20version-1.2.0-blue.svg)](https://github.com/puckR)
+[![R-CMD-check](https://github.com/zbeg/puckR/workflows/R-CMD-check/badge.svg)](https://github.com/zbeg/puckR/actions)
+[![](https://img.shields.io/github/last-commit/zbeg/puckR.svg)](https://github.com/zbeg/puckR/commits/master)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/puckR)](https://cran.r-project.org/package=puckR)
 [![](https://img.shields.io/twitter/follow/danmorse_.svg?style=social)](https://twitter.com/danmorse_)
 <!-- badges: end -->
 
@@ -22,7 +22,7 @@ changes that (hopefully) will allow the core play-by-play scraper to
 work and continue to update the data repo.
 
 Prior seasons still live in the
-[hockeyR-data](https://github.com/danmorse314/hockeyR-data) repository
+[puckR-data](https://github.com/zbeg/puckR-data) repository
 and can still be pulled using the `load_pbp` function. The current
 season will hopefully be updated each night, but is still very new and
 should be checked during use.
@@ -34,19 +34,19 @@ Please be sure to send any and all complaints to <gbettman@nhl.com>.
 This package contains various functions to scrape and clean play-by-play
 data from NHL.com. Season play-by-play data scraped with these functions
 can be found in the
-[hockeyR-data](https://github.com/danmorse314/hockeyR-data) repository.
+[puckR-data](https://github.com/zbeg/puckR-data) repository.
 It also contains functions to scrape data from
 [hockey-reference.com](https://www.hockey-reference.com/), including
 standings, player stats, and jersey number history.
 
 ## Installation
 
-Install the development version of `hockeyR` from
+Install the development version of `puckR` from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("danmorse314/hockeyR")
+devtools::install_github("zbeg/puckR")
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ surface I highly recommend the
 [sportyR](https://github.com/sportsdataverse/sportyR) package).
 
 ``` r
-library(hockeyR)
+library(puckR)
 library(tidyverse)
 library(sportyR)
 ```
@@ -65,7 +65,7 @@ library(sportyR)
 
 The fastest way to load a season’s play-by-play data is through the
 `load_pbp` function, which pulls the desired season(s) from
-[hockeyR-data](https://github.com/danmorse314/hockeyR-data/tree/main/data).
+[puckR-data](https://github.com/zbeg/puckR-data/tree/main/data).
 `load_pbp` also has the advantage of accepting more explicit values for
 the seasons desired. For example, if you want to get the play-by-play
 for the 2020-2021 NHL season, all of `load_pbp('2020-2021')`,
@@ -98,17 +98,17 @@ respectively. The variables `x_fixed` and `y_fixed` are transformations
 of the `x` and `y` event coordinates such that the home team is always
 shooting to the right and the away team is always shooting to the left.
 For full details on the included variables, see the
-[`scrape_game`](https://github.com/danmorse314/hockeyR/blob/master/R/scrape_game.R)
+[`scrape_game`](https://github.com/zbeg/puckR/blob/master/R/scrape_game.R)
 documentation.
 
-#### NEW in hockeyR v1.1.0: Expected Goals
+#### NEW in puckR v1.1.0: Expected Goals
 
-As of `hockeyR` v1.1.0, a new column has been added to the play-by-play
-data: Expected goals! The `hockeyR` package now includes its own public
+As of `puckR` v1.1.0, a new column has been added to the play-by-play
+data: Expected goals! The `puckR` package now includes its own public
 expected goals model, and every unblocked shot in the play-by-play data
 now has an `xg` value. A full description of the model, including the
 code used to construct it and the testing results, can be found in the
-[hockeyR-models](https://github.com/danmorse314/hockeyR-models)
+[puckR-models](https://github.com/zbeg/puckR-models)
 repository. Users can now investigate additional statistics, such as
 player goals above expectation without having to create their own entire
 model.
@@ -155,7 +155,7 @@ game <- pbp %>%
   filter(game_date == "2019-04-23" & home_abbreviation == "SJS")
 
 # grab team logos & colors
-team_logos <- hockeyR::team_logos_colors %>%
+team_logos <- puckR::team_logos_colors %>%
   filter(team_abbr == unique(game$home_abbreviation) | team_abbr == unique(game$away_abbreviation)) %>%
   # add in dummy variables to put logos on the ice
   mutate(x = ifelse(full_team_name == unique(game$home_name), 50, -50),
@@ -193,7 +193,7 @@ geom_hockey("nhl") +
     "{unique(game$game_date)}\n
     {unique(shots$away_abbreviation)} {unique(shots$away_final)} - {unique(shots$home_final)} {unique(shots$home_abbreviation)}"
     ),
-    caption = "data from hockeyR | plot made with sportyR"
+    caption = "data from puckR | plot made with sportyR"
     ) +
   theme(
     plot.title = element_text(hjust = 0.5),
@@ -206,7 +206,7 @@ geom_hockey("nhl") +
 
 ### More scraping functions
 
-In addition to the play-by-play data, `hockeyR` also provides access to
+In addition to the play-by-play data, `puckR` also provides access to
 a few other endpoints in the NHL’s API. You can scrape the current
 official rosters for all NHL teams using the `get_current_rosters`
 function. This pulls the rosters directly from the NHL at the time you
